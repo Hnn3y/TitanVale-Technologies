@@ -9,7 +9,7 @@ AI-driven automation and intelligent systems
 Embedded systems and IoT development
 Electric vehicle technology
 CAD/CAM design and mechanical engineering
-Cybersecurity and ethical hacking practices
+Cybersecurity and Ethical hacking practices
 
 ---
 
