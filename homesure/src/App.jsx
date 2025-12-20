@@ -1,11 +1,14 @@
-import { useState } from 'react'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Landing from "../pages/LandingPage";
+import "./App.css";
 
+function App() {
   return (
-    <>
-     
-    </>
-  )
+      <Routes>
+        <Route path="/" element={<Landing />} />
+      </Routes>
+  );
+}
 
-export default App
+export default App;
