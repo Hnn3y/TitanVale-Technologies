@@ -36,152 +36,183 @@ HomeSure is built on a modern, scalable architecture designed for real-time resp
 ```mermaid
 
 graph TD
-    %% Artisan Onboarding
-    A[A. Artisan Landing Page] --> B[B. Artisan Signup Form];
-    B --> C[C. Document Upload Screen];
-    C --> D[D. Skills & Categories Selection];
-    D --> E[E. Bank Account Setup];
-    E --> F[F. Application Submitted - Pending Review];
-    F --> G{Admin Approval?};
-    G -- Rejected --> H[Rejection Notice with Reasons];
-    G -- Approved --> I[I. Welcome Screen & Tutorial];
-    
-    %% Main Artisan Flow
-    I --> J[J. Artisan Home Screen: Toggle Online/Offline];
-    J -- Online --> K{K. Incoming Job Request};
-    K -- New Request --> L[L. Job Details Screen];
-    L --> M{M. Accept or Decline?};
-    M -- Decline --> J;
-    M -- Accept --> N[N. Customer Details & Navigation];
-    
-    %% Job Execution
-    N --> O[O. Arrived Button - Start Diagnostic];
-    O --> P[P. Diagnostic Phase - Timer Running];
-    P --> Q[Q. Submit Quote/Invoice Screen];
-    Q --> R{R. Customer Approves Quote?};
-    R -- Declined --> S[S. Collect Diagnostic Fee & End Job];
-    R -- Approved --> T[T. Work in Progress Status];
-    
-    %% Completion
-    T --> U[U. Mark Job Complete Button];
-    U --> V[V. Final Invoice Confirmation];
-    V --> W[W. Payment Received Notification];
-    W --> X[X. Rate Customer];
-    X --> J;
-    
-    %% Additional Screens
-    J -. Tab .-> Y[Y. Earnings Tab];
-    J -. Tab .-> Z[Z. Job History];
-    J -. Tab .-> AA[AA. Profile & Documents];
-    J -. SOS .-> AB[AB. Emergency Support Button];
-    
-    %% Error States
-    N -. GPS Failed .-> AC[AC. Manual Navigation Instructions];
-    K -. No Response 2min .-> AD[AD. Request Expired];
-    V -. Payment Failed .-> AE[AE. Payment Pending - Contact Support];
-    
-    S --> J;
-    AE --> Y;
-
- %% Admin Login
-    A[A. Admin Login] --> B[B. Dashboard Home];
-    
-    %% Main Dashboard Modules
-    B --> C[C. Overview Analytics];
-    C --> C1[Real-time: Active bookings, Online artisans, Revenue today];
-    C --> C2[Charts: Bookings by hour, Popular services, Geographic heatmap];
-    
-    %% Artisan Management
-    B --> D[D. Artisan Management];
-    D --> E[E. Pending Applications List];
-    E --> F[F. Application Review Screen];
-    F --> G{Approve/Reject Decision};
-    G -- Approve --> H[Send welcome email, Activate account];
-    G -- Reject --> I[Send rejection email with reasons];
-    
-    D --> J[J. Active Artisans List];
-    J --> K[K. Artisan Profile Detail];
-    K --> L[View: Ratings, Completed jobs, Earnings, Documents];
-    K --> M[Actions: Suspend, Flag, Edit profile, View history];
-    
-    D --> N[N. Suspended/Flagged Artisans];
-    N --> O[Review flags, Reinstate or ban];
-    
-    %% Customer Management
-    B --> P[P. Customer Management];
-    P --> Q[Q. Customer List & Search];
-    Q --> R[R. Customer Profile Detail];
-    R --> S[View: Booking history, Payment methods, Issues reported];
-    R --> T[Actions: Refund, Ban, Contact, View disputes];
-    
-    %% Booking Monitoring
-    B --> U[U. Live Bookings Monitor];
-    U --> V[V. Active Bookings Map View];
-    V --> W[Filter: By status, service type, location, time];
-    U --> X[X. Booking Details Drill-down];
-    X --> Y[View: Full journey, Chat logs, Payment status, GPS tracking];
-    X --> Z[Actions: Intervene, Cancel, Refund, Contact parties];
-    
-    %% Payment & Finance
-    B --> AA[AA. Financial Dashboard];
-    AA --> AB[AB. Transactions List];
-    AB --> AC[Filter: Pending, Completed, Failed, Refunds];
-    AB --> AD[AD. Transaction Detail];
-    AD --> AE[View: Amount breakdown, Fees, Artisan payout, Platform commission];
-    
-    AA --> AF[AF. Payout Management];
-    AF --> AG[Pending artisan payouts, Process bulk payouts];
-    AF --> AH[View: Payout history, Failed payouts, Bank details];
-    
-    AA --> AI[AI. Revenue Analytics];
-    AI --> AJ[Charts: Revenue trends, Commission earned, Refunds issued];
-    
-    %% Disputes & Support
-    B --> AK[AK. Support Tickets];
-    AK --> AL[AL. Ticket Queue];
-    AL --> AM[Filter: Open, In Progress, Resolved, Priority];
-    AL --> AN[AN. Ticket Detail];
-    AN --> AO[View: Issue description, User details, Chat history];
-    AN --> AP[Actions: Respond, Escalate, Refund, Close];
-    
-    AK --> AQ[AQ. Disputes Management];
-    AQ --> AR[List: Payment disputes, Service quality, Cancellations];
-    AR --> AS[AS. Dispute Resolution Screen];
-    AS --> AT[View: Both sides evidence, Chat, Photos];
-    AS --> AU[Actions: Rule in favor, Partial refund, Ban user, Close];
-    
-    %% Settings & Configuration
-    B --> AV[AV. Platform Settings];
-    AV --> AW[AW. Service Categories Config];
-    AW --> AX[Add/Edit/Remove service types, Set base prices];
-    
-    AV --> AY[AY. Pricing & Fees Config];
-    AY --> AZ[Set: Platform commission %, Cancellation fees, Diagnostic fees];
-    
-    AV --> BA[BA. Geographic Settings];
-    BA --> BB[Set: Service areas, Radius limits, Surge pricing zones];
-    
-    AV --> BC[BC. System Configuration];
-    BC --> BD[Set: Matching timeout, Auto-cancellation time, Payment gateway settings];
-    
-    %% Reports
-    B --> BE[BE. Reports & Analytics];
-    BE --> BF[BF. Generate Reports];
-    BF --> BG[Options: Revenue, Artisan performance, Customer behavior, Service demand];
-    BF --> BH[Export: PDF, Excel, CSV];
-    
-    %% User Management
-    B --> BI[BI. Admin Users];
-    BI --> BJ[List of admin accounts, Roles & permissions];
-    BI --> BK[Add/Edit/Remove admin users];
-    
-    %% Quick Actions
-    B --> BL[Quick Actions Panel];
-    BL --> BM[Emergency: Broadcast alert, System maintenance mode];
-    BL --> BN[Bulk operations: Message artisans, Send notifications];
-    
-    H --> J;
-    I --> E;
-    AU --> AQ;
+    %% ========== CUSTOMER SIDE ==========
+    subgraph Customer_Flow["CUSTOMER APPLICATION"]
+        C_A[Landing Page] --> C_B{User Status};
+        C_B -- New User --> C_C[Customer Signup];
+        C_B -- Existing User --> C_D[Customer Login];
+        C_C --> C_E;
+        C_D --> C_E;
+        
+        C_E[Home Screen: Map & Service Categories] --> C_F(Select Category & Location);
+        C_F --> C_G{Live Matching & Quotes};
+        
+        C_G -- Accepts ETA & Fee --> C_H{Artisan Profile & Booking};
+        C_G -- Declines / No Match --> C_E;
+        
+        C_H -- Book Now --> C_I[Live Tracking Screen];
+        C_H -- Schedule Later --> C_J[Schedule Date/Time];
+        C_J --> C_I;
+        
+        C_I -- Job Complete --> C_K(Artisan Submits Invoice);
+        C_K --> C_L[Payment Screen: Review & Pay];
+        C_L --> C_M[Ratings & Review];
+        C_M --> C_N[Booking History];
+        
+        C_E -. Tab .-> C_P[Bookings Tab];
+        C_E -. Tab .-> C_Q[Saved/Invoice Tab];
+        C_E -. Tab .-> C_R[Profile Tab];
+        
+        C_P --> C_I;
+        C_Q --> C_L;
     end
+    
+    %% ========== ARTISAN SIDE ==========
+    subgraph Artisan_Flow["ARTISAN APPLICATION"]
+        A_A[Artisan Landing Page] --> A_B[Artisan Signup Form];
+        A_B --> A_C[Document Upload Screen];
+        A_C --> A_D[Skills & Categories Selection];
+        A_D --> A_E[Bank Account Setup];
+        A_E --> A_F[Application Submitted];
+        A_F --> A_G{Admin Approval?};
+        A_G -- Rejected --> A_H[Rejection Notice];
+        A_G -- Approved --> A_I[Welcome Screen & Tutorial];
+        
+        A_I --> A_J[Home Screen: Toggle Online/Offline];
+        A_J -- Online --> A_K{Incoming Job Request};
+        A_K -- New Request --> A_L[Job Details Screen];
+        A_L --> A_M{Accept or Decline?};
+        A_M -- Decline --> A_J;
+        A_M -- Accept --> A_N[Customer Details & Navigation];
+        
+        A_N --> A_O[Arrived Button - Start Diagnostic];
+        A_O --> A_P[Diagnostic Phase - Timer Running];
+        A_P --> A_Q[Submit Quote/Invoice Screen];
+        A_Q --> A_R{Customer Approves Quote?};
+        A_R -- Declined --> A_S[Collect Diagnostic Fee & End];
+        A_R -- Approved --> A_T[Work in Progress Status];
+        
+        A_T --> A_U[Mark Job Complete Button];
+        A_U --> A_V[Final Invoice Confirmation];
+        A_V --> A_W[Payment Received Notification];
+        A_W --> A_X[Rate Customer];
+        A_X --> A_J;
+        
+        A_J -. Tab .-> A_Y[Earnings Tab];
+        A_J -. Tab .-> A_Z[Job History];
+        A_J -. Tab .-> A_AA[Profile & Documents];
+        A_J -. SOS .-> A_AB[Emergency Support Button];
+        
+        A_N -. GPS Failed .-> A_AC[Manual Navigation Instructions];
+        A_K -. No Response 2min .-> A_AD[Request Expired];
+        A_V -. Payment Failed .-> A_AE[Payment Pending - Contact Support];
+        
+        A_S --> A_J;
+        A_AE --> A_Y;
+    end
+    
+    %% ========== ADMIN DASHBOARD ==========
+    subgraph Admin_Panel["ADMIN DASHBOARD"]
+        AD_A[Admin Login] --> AD_B[Dashboard Home];
+        
+        AD_B --> AD_C[Overview Analytics];
+        AD_C --> AD_C1[Real-time: Active bookings, Online artisans];
+        AD_C --> AD_C2[Charts: Bookings, Popular services, Heatmap];
+        
+        AD_B --> AD_D[Artisan Management];
+        AD_D --> AD_E[Pending Applications List];
+        AD_E --> AD_F[Application Review Screen];
+        AD_F --> AD_G{Approve/Reject};
+        AD_G -- Approve --> AD_H[Send Welcome Email & Activate];
+        AD_G -- Reject --> AD_I[Send Rejection Email];
+        
+        AD_D --> AD_J[Active Artisans List];
+        AD_J --> AD_K[Artisan Profile Detail];
+        AD_K --> AD_L[View: Ratings, Jobs, Earnings, Docs];
+        AD_K --> AD_M[Actions: Suspend, Flag, Edit];
+        
+        AD_D --> AD_N[Suspended/Flagged Artisans];
+        AD_N --> AD_O[Review Flags & Reinstate/Ban];
+        
+        AD_B --> AD_P[Customer Management];
+        AD_P --> AD_Q[Customer List & Search];
+        AD_Q --> AD_R[Customer Profile Detail];
+        AD_R --> AD_S[View: History, Payments, Issues];
+        AD_R --> AD_T[Actions: Refund, Ban, Contact];
+        
+        AD_B --> AD_U[Live Bookings Monitor];
+        AD_U --> AD_V[Active Bookings Map View];
+        AD_V --> AD_W[Filter: Status, Service, Location];
+        AD_U --> AD_X[Booking Details Drill-down];
+        AD_X --> AD_Y[View: Journey, Chats, GPS];
+        AD_X --> AD_Z[Actions: Intervene, Cancel, Refund];
+        
+        AD_B --> AD_AA[Financial Dashboard];
+        AD_AA --> AD_AB[Transactions List];
+        AD_AB --> AD_AC[Filter: Pending, Completed, Failed];
+        AD_AB --> AD_AD[Transaction Detail];
+        AD_AD --> AD_AE[View: Breakdown, Fees, Commission];
+        
+        AD_AA --> AD_AF[Payout Management];
+        AD_AF --> AD_AG[Process Artisan Payouts];
+        AD_AF --> AD_AH[View: Payout History, Failed];
+        
+        AD_AA --> AD_AI[Revenue Analytics];
+        AD_AI --> AD_AJ[Charts: Revenue Trends, Commission];
+        
+        AD_B --> AD_AK[Support Tickets];
+        AD_AK --> AD_AL[Ticket Queue];
+        AD_AL --> AD_AM[Filter: Open, In Progress, Resolved];
+        AD_AL --> AD_AN[Ticket Detail];
+        AD_AN --> AD_AO[View: Issue, User, Chat History];
+        AD_AN --> AD_AP[Actions: Respond, Escalate, Close];
+        
+        AD_AK --> AD_AQ[Disputes Management];
+        AD_AQ --> AD_AR[List: Payment, Quality Disputes];
+        AD_AR --> AD_AS[Dispute Resolution Screen];
+        AD_AS --> AD_AT[View: Evidence, Chat, Photos];
+        AD_AS --> AD_AU[Actions: Rule, Refund, Ban];
+        
+        AD_B --> AD_AV[Platform Settings];
+        AD_AV --> AD_AW[Service Categories Config];
+        AD_AW --> AD_AX[Add/Edit Services & Base Prices];
+        
+        AD_AV --> AD_AY[Pricing & Fees Config];
+        AD_AY --> AD_AZ[Set: Commission, Cancellation Fees];
+        
+        AD_AV --> AD_BA[Geographic Settings];
+        AD_BA --> AD_BB[Set: Service Areas, Radius, Surge];
+        
+        AD_AV --> AD_BC[System Configuration];
+        AD_BC --> AD_BD[Set: Timeouts, Payment Gateway];
+        
+        AD_B --> AD_BE[Reports & Analytics];
+        AD_BE --> AD_BF[Generate Reports];
+        AD_BF --> AD_BG[Options: Revenue, Performance, Demand];
+        AD_BF --> AD_BH[Export: PDF, Excel, CSV];
+        
+        AD_B --> AD_BI[Admin Users];
+        AD_BI --> AD_BJ[List: Accounts, Roles, Permissions];
+        AD_BI --> AD_BK[Add/Edit/Remove Admins];
+        
+        AD_B --> AD_BL[Quick Actions Panel];
+        AD_BL --> AD_BM[Emergency: Broadcast, Maintenance];
+        AD_BL --> AD_BN[Bulk: Message Artisans, Notify];
+        
+        AD_H --> AD_J;
+        AD_I --> AD_E;
+        AD_AU --> AD_AQ;
+    end
+    
+    %% ========== CROSS-PLATFORM CONNECTIONS ==========
+    C_K -.-> A_Q;
+    A_R -.-> C_L;
+    A_G -.-> AD_F;
+    AD_H -.-> A_I;
+    AD_Z -.-> C_I;
+    AD_Z -.-> A_N;
+    
+    style Customer_Flow fill:#e1f5ff
+    style Artisan_Flow fill:#fff4e1
+    style Admin_Panel fill:#f0e1ff
 ```
