@@ -36,40 +36,51 @@ HomeSure is built on a modern, scalable architecture designed for real-time resp
 ```mermaid
 
 graph TD
-    %% Main Sections
-    A[A. Landing Page] --> B{B. User Status};
-
-    %% Login/Signup Branch
-    B -- New User --> C[C. Customer Signup];
-    B -- Existing User --> D[D. Customer Login];
-    C --> E;
-    D --> E;
+    %% Artisan Onboarding
+    A[A. Artisan Landing Page] --> B[B. Artisan Signup Form];
+    B --> C[C. Document Upload Screen];
+    C --> D[D. Skills & Categories Selection];
+    D --> E[E. Bank Account Setup];
+    E --> F[F. Application Submitted - Pending Review];
+    F --> G{Admin Approval?};
+    G -- Rejected --> H[Rejection Notice with Reasons];
+    G -- Approved --> I[I. Welcome Screen & Tutorial];
     
-    %% The Core Booking Flow
-    E[E. Home Screen: Map, Service Categories & Location Input] --> F(User selects Category & Location);
-    F --> G{F. Live Matching & Quotes};
+    %% Main Artisan Flow
+    I --> J[J. Artisan Home Screen: Toggle Online/Offline];
+    J -- Online --> K{K. Incoming Job Request};
+    K -- New Request --> L[L. Job Details Screen];
+    L --> M{M. Accept or Decline?};
+    M -- Decline --> J;
+    M -- Accept --> N[N. Customer Details & Navigation];
     
-    %% Matching/Decision Points
-    G -- Accepts ETA & Diagnostic Fee --> H{G. Artisan Profile & Booking Choice};
-    G -- Declines / No Match --> E; 
+    %% Job Execution
+    N --> O[O. Arrived Button - Start Diagnostic];
+    O --> P[P. Diagnostic Phase - Timer Running];
+    P --> Q[Q. Submit Quote/Invoice Screen];
+    Q --> R{R. Customer Approves Quote?};
+    R -- Declined --> S[S. Collect Diagnostic Fee & End Job];
+    R -- Approved --> T[T. Work in Progress Status];
     
-    H -- "Book Now" --> I[H. Live Tracking Screen];
-    H -- "Schedule Later" --> J[H. Schedule Date/Time Picker];
-    J --> I;
-
-    %% Job Completion & Payment Flow
-    I -- Artisan Arrives & Completes Job --> K(I. Artisan Submits Final Invoice/Quote);
-    K --> L[J. Payment Screen: Review Invoice & Pay];
-    L --> M[M. Ratings & Review];
-    M --> N[N. Booking History / Dashboard];
-
-    %% Global Navigation Tabs (These are accessible from the main screens)
-    subgraph Global Navigation
-        E -. Tab .-> P[P. Bookings Tab];
-        E -. Tab .-> Q[Q. Saved/Invoice Tab];
-        E -. Tab .-> R[R. Profile Tab];
-        
-        P --> I;
-        Q --> L;
+    %% Completion
+    T --> U[U. Mark Job Complete Button];
+    U --> V[V. Final Invoice Confirmation];
+    V --> W[W. Payment Received Notification];
+    W --> X[X. Rate Customer];
+    X --> J;
+    
+    %% Additional Screens
+    J -. Tab .-> Y[Y. Earnings Tab];
+    J -. Tab .-> Z[Z. Job History];
+    J -. Tab .-> AA[AA. Profile & Documents];
+    J -. SOS .-> AB[AB. Emergency Support Button];
+    
+    %% Error States
+    N -. GPS Failed .-> AC[AC. Manual Navigation Instructions];
+    K -. No Response 2min .-> AD[AD. Request Expired];
+    V -. Payment Failed .-> AE[AE. Payment Pending - Contact Support];
+    
+    S --> J;
+    AE --> Y;
     end
 ```
