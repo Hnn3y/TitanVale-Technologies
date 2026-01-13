@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Lightbulb, HelpCircle, Home } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -44,10 +45,12 @@ const Landing = () => {
     setCurrentSlide(index);
   };
 
+  const navigate = useNavigate();
+
   const handleFinish = () => {
-    // Navigate to login - replace with actual navigation
-    alert('Navigating to login page...');
+    navigate("/welcome"); // or any route you want
   };
+  
 
   return (
     <div className="min-h-screen bg-gray-200 flex items-center justify-center p-4">
