@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Lightbulb, HelpCircle, Home } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 

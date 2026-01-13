@@ -1,5 +1,4 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Landing from "../pages/LandingPage";
 import "./App.css";
 import Welcome from "../pages/Welcome";
