@@ -66,7 +66,8 @@ graph TD
         C_P --> C_I;
         C_Q --> C_L;
     end
-    
+    ```
+    ```mermaid
     %% ========== ARTISAN SIDE ==========
     subgraph Artisan_Flow["ARTISAN APPLICATION"]
         A_A[Artisan Landing Page] --> A_B[Artisan Signup Form];
@@ -110,6 +111,9 @@ graph TD
         A_S --> A_J;
         A_AE --> A_Y;
     end
+    ```
+
+    ```mermaid
     
     %% ========== ADMIN DASHBOARD ==========
     subgraph Admin_Panel["ADMIN DASHBOARD"]
