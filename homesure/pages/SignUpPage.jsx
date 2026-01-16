@@ -90,7 +90,7 @@ const SignupPage = () => {
             <input
               type="password"
               required
-              placeholder="Re-enter your password text-gray-400"
+              placeholder="Re-enter your password"
               className="text-gray-700 w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
           </div>
