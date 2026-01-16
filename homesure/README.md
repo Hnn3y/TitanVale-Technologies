@@ -36,6 +36,7 @@ HomeSure is built on a modern, scalable architecture designed for real-time resp
 ```mermaid
 
 graph TD
+
     %% ========== CUSTOMER SIDE ==========
     subgraph Customer_Flow["CUSTOMER APPLICATION"]
         C_A[Landing Page] --> C_B{User Status};
@@ -116,7 +117,7 @@ graph TD
     ```
 
     ```mermaid
-    
+
     graph TD
     %% ========== ADMIN DASHBOARD ==========
     subgraph Admin_Panel["ADMIN DASHBOARD"]
