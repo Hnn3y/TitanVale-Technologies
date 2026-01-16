@@ -13,7 +13,7 @@ const Welcome = () => {
 
         {/* Create Account Button */}
         <Link
-          to="/register"
+          to="/signup"
           className="block w-full bg-blue-600 text-white py-3 rounded-lg font-medium text-sm
                      hover:bg-blue-700 transition"
         >
